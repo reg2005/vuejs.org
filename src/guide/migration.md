@@ -5,16 +5,15 @@ order: 24
 ---
 
 ## FAQ
+> Офигеть - это супер длинная страница! Версия 2.0 совершенно непохожа на 1.0. Я дожен буду изучить все заново, или возможно мигрировать?
 
-> Woah - this is a super long page! Does that mean 2.0 is completely different, I'll have to learn the basics all over again, and migrating will be practically impossible?
+Я рад что вы спросили! Ответ нет. Около 90% функционала API имеющих отношение к концепции ядра не тронуты. Страница длинная потому что нам нравиться делать подробные объяснения с кучей примеров. Будьте уверены, __эта страница не требует детального прочтения с верху донизу__
 
-I'm glad you asked! The answer is no. About 90% of the API is the same and the core concepts haven't changed. It's long because we like to offer very detailed explanations and include a lot of examples. Rest assured, __this is not something you have to read from top to bottom!__
+> Как нужно запускать миграции?
 
-> Where should I start in a migration?
+1. Запустите [migration helper](https://github.com/vuejs/vue-migration-helper) в текущем проекте. Мы тщательно проработали процесс миграции до простейшего вызова команд в CLI. Когда плагин миграции распознает в вашем коде старые паттерны, функции и т.д. он сообщит подробности и много полезной информации о том как правильно мигрировать
 
-1. Start by running the [migration helper](https://github.com/vuejs/vue-migration-helper) on a current project. We've carefully minified and compressed a senior Vue dev into a simple command line interface. Whenever they recognize a deprecated pattern, they'll let you know, offer suggestions, and provide links to more info.
-
-2. After that, browse through the table of contents for this page in the sidebar. If you see a topic you may be affected by, but the migration helper didn't catch, check it out.
+2.После этого, просмотрите оглавления тем на этой странице в боковой панели. Если вы увидите тему касающуюся вас которую помошник не уловил. Загляните туда.
 
 3. If you have any tests, run them and see what still fails. If you don't have tests, just open the app in your browser and keep an eye out for warnings or errors as you navigate around.
 
@@ -38,16 +37,14 @@ As for Vuex, even version 0.8 is compatible with Vue 2, so you're not forced to 
 
 ## Templates
 
-### Fragment Instances <sup>deprecated</sup>
-
-Every component must have exactly one root element. Fragment instances are no longer allowed. If you have a template like this:
+### Fragment Instances <sup>устаревшее</sup>
+Каждый компонент обязательно должен иметь один root element. Fragment instances больше не поддерживаются. Если ваши шаблоны выглядят так:
 
 ``` html
 <p>foo</p>
 <p>bar</p>
 ```
-
-It's recommended to simply wrap the entire contents in a new element, like this:
+Мы рекомендуем просто обернуть весь контент в новй элемент, например так:
 
 ``` html
 <div>
@@ -65,20 +62,9 @@ It's recommended to simply wrap the entire contents in a new element, like this:
 
 ## Lifecycle Hooks
 
-### `beforeCompile` <sup>deprecated</sup>
+### `beforeCompile` <sup>устаревшее</sup>
 
-Use the `created` hook instead.
-
-{% raw %}
-<div class="upgrade-path">
-  <h4>Upgrade Path</h4>
-  <p>Run the <a href="https://github.com/vuejs/vue-migration-helper">migration helper</a> on your codebase to find all examples of this hook.</p>
-</div>
-{% endraw %}
-
-### `compiled` <sup>deprecated</sup>
-
-Use the new `mounted` hook instead.
+Используйте `created` вместо него.
 
 {% raw %}
 <div class="upgrade-path">
@@ -87,9 +73,20 @@ Use the new `mounted` hook instead.
 </div>
 {% endraw %}
 
-### `attached` <sup>deprecated</sup>
+### `compiled` <sup>устаревшее</sup>
 
-Use a custom in-dom check in other hooks. For example, to replace:
+Используйте новое состоянее `mounted` взамен устаревшего.
+
+{% raw %}
+<div class="upgrade-path">
+  <h4>Upgrade Path</h4>
+  <p>Run the <a href="https://github.com/vuejs/vue-migration-helper">migration helper</a> on your codebase to find all examples of this hook.</p>
+</div>
+{% endraw %}
+
+### `attached` <sup>устаревшее</sup>
+
+Используйте ручную in-dom проверку в других хуках. Для примера, это устарело:
 
 ``` js
 attached: function () {
@@ -97,7 +94,7 @@ attached: function () {
 }
 ```
 
-You could use:
+Тоже самое можно сделать так:
 
 ``` js
 mounted: function () {
@@ -114,9 +111,9 @@ mounted: function () {
 </div>
 {% endraw %}
 
-### `detached` <sup>deprecated</sup>
+### `detached` <sup>устаревшее</sup>
 
-Use a custom in-dom check in other hooks. For example, to replace:
+Используйте ручную in-dom проверку в других хуках. Для примера, это устарело:
 
 ``` js
 detached: function () {
@@ -124,7 +121,7 @@ detached: function () {
 }
 ```
 
-You could use:
+Тоже самое можно сделать так:
 
 ``` js
 destroyed: function () {
@@ -141,9 +138,9 @@ destroyed: function () {
 </div>
 {% endraw %}
 
-### `init` <sup>deprecated</sup>
+### `init` <sup>устаревшее</sup>
 
-Use the new `beforeCreate` hook instead, which is essentially the same thing. It was renamed for consistency with other lifecycle methods.
+Используйте новый `beforeCreate`. Init был переименован для последовательного сочетания названий с другими lifecycle методами
 
 {% raw %}
 <div class="upgrade-path">
@@ -152,9 +149,9 @@ Use the new `beforeCreate` hook instead, which is essentially the same thing. It
 </div>
 {% endraw %}
 
-### `ready` <sup>deprecated</sup>
+### `ready` <sup>устаревшее</sup>
 
-Use the new `mounted` hook instead. It should be noted though that with `mounted`, there's no guarantee to be in-document. For that, also include `Vue.nextTick`/`vm.$nextTick`. For example:
+Используйте новый `mounted` хук взамен. Важно отметить то, что `mounted`, не гарантирует что это будет в документе. Для этого также включайте `Vue.nextTick`/`vm.$nextTick`. Например:
 
 ``` js
 mounted: function () {
@@ -173,9 +170,9 @@ mounted: function () {
 
 ## `v-for`
 
-### `v-for` Argument Order for Arrays
+### `v-for` Расположение аргументов в массиве
 
-When including an `index`, the argument order for arrays used to be `(index, value)`. It is now `(value, index)` to be more consistent with JavaScript's native array methods such as `forEach` and `map`.
+Обычно аргументы были в таком порядке `(index, value)` (при условии что мы используем `index`). А теперь в таком `(value, index)` это сделано для того, что-бы не противоречить таким JavaScript функциям как `forEach` и `map`.
 
 {% raw %}
 <div class="upgrade-path">
@@ -184,9 +181,9 @@ When including an `index`, the argument order for arrays used to be `(index, val
 </div>
 {% endraw %}
 
-### `v-for` Argument Order for Objects
+### `v-for` Расположение аргументов в объекте
 
-When including a `key`, the argument order for objects used to be `(key, value)`. It is now `(value, key)` to be more consistent with common object iterators such as lodash's.
+Обычно аргументы были в таком порядке `(key, value)` (при условии что мы используем `key`). А теперь в таком `(value, key)` это сделано для того, что-бы быть менее противоречивым с общим объектом iterators, таким как lodash's.
 
 {% raw %}
 <div class="upgrade-path">
@@ -195,9 +192,9 @@ When including a `key`, the argument order for objects used to be `(key, value)`
 </div>
 {% endraw %}
 
-### `$index` and `$key` <sup>deprecated</sup>
+### `$index` and `$key` <sup>устаревшее</sup>
 
-The implicitly assigned `$index` and `$key` variables have been deprecated in favor of explicitly defining them in `v-for`. This makes the code easier to read for developers less experienced with Vue and also results in much clearer behavior when dealing with nested loops.
+Неявный присвоенные переменные `$index` и `$key` были убраны в пользу их явного определения в `v-for`. Это делает код более читабельным для разработчиков и также приводит к намного более четкому поведению при контакте с вложенными циклами.
 
 {% raw %}
 <div class="upgrade-path">
