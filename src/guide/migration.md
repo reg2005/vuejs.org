@@ -203,15 +203,14 @@ mounted: function () {
 </div>
 {% endraw %}
 
-### `track-by` <sup>deprecated</sup>
+### `track-by` <sup>устаревшее</sup>
 
-`track-by` has been replaced with `key`, which works like any other attribute: without the `v-bind:` or `:` prefix, it is treated as a literal string. In most cases, you'd want to use a dynamic binding which expects a full expression instead of a key. For example, in place of:
+`track-by` было убрано с `key`который работал подобно любому другому атрибуту: без `v-bind:` или `:` префикса, это обращалось к literal строке. В большинстве случаев, вы хотели бы использовать динамический binding который ожидает полного выражения вместо ключа. К примеру в место:
 
 ``` html
 <div v-for="item in items" track-by="id">
 ```
-
-You would now write:
+Сейчас мы пишем:
 
 ``` html
 <div v-for="item in items" v-bind:key="item.id">
@@ -224,9 +223,8 @@ You would now write:
 </div>
 {% endraw %}
 
-### `v-for` Range Values
-
-Previously, `v-for="number in 10"` would have `number` starting at 0 and ending at 9. Now it starts at 1 and ends at 10.
+### `v-for` Диапозон значений
+Раньше, `v-for="number in 10"` давало `number` начиная с 0 и заканчивая 9. Сейчас это начинается с 1 и заканчивается 10.
 
 {% raw %}
 <div class="upgrade-path">
@@ -237,9 +235,9 @@ Previously, `v-for="number in 10"` would have `number` starting at 0 and ending 
 
 ## Props
 
-### `coerce` Prop Option <sup>deprecated</sup>
+### `coerce` Prop опция <sup>устаревшее</sup>
 
-If you want to coerce a prop, setup a local computed value based on it instead. For example, instead of:
+Если вы ранее принимали prop и принуждали его с помощью coerce, то теперь установливайте локальное значение с помощью computed. К примеру было так:
 
 ``` js
 props: {
@@ -254,7 +252,7 @@ props: {
 }
 ```
 
-You could write:
+А теперь это делается так:
 
 ``` js
 props: {
@@ -268,11 +266,9 @@ computed: {
   }
 }
 ```
-
-There are a few advantages:
-
-- You still have access to the original value of the prop.
-- You are forced to be more explicit, by giving your coerced value a name that differentiates it from the value passed in the prop.
+Это дает такие преимущества:
+- Вы по прежнему имеете доступ к оригинальному значению prop.
+- Вы делаете код более явным, давая Вашему значению имя, которое дифференцирует его от исходного значения, передаваемого в prop.
 
 {% raw %}
 <div class="upgrade-path">
@@ -281,9 +277,9 @@ There are a few advantages:
 </div>
 {% endraw %}
 
-### `twoWay` Prop Option <sup>deprecated</sup>
+### `twoWay` Prop опция <sup>устаревшее</sup>
 
-Props are now always one-way down. To produce side effects in the parent scope, a component needs to explicitly emit an event instead of relying on implicit binding. For more information, see:
+Props теперь всегда односторонние вниз. Чтобы произвести изменения в родительском компоненте, дочерний компонент должен явно вызвать событие вместо того, чтобы положиться на неявную привязку. (Как было раньше). Подробности здесь:
 
 - [Custom component events](components.html#Custom-Events)
 - [Custom input components](components.html#Form-Input-Components-using-Custom-Events) (using component events)
@@ -296,9 +292,9 @@ Props are now always one-way down. To produce side effects in the parent scope, 
 </div>
 {% endraw %}
 
-### `v-bind` with `.once` and `.sync` Modifiers <sup>deprecated</sup>
+### `v-bind` с `.once` и `.sync` Модификаторами <sup>устаревшее</sup>
 
-Props are now always one-way down. To produce side effects in the parent scope, a component needs to explicitly emit an event instead of relying on implicit binding. For more information, see:
+Props теперь всегда отдаются в одну сторону (как было сказано выше). Для создания связи с родительским scope, компоненту требуется явно вызывать событие (emit) взамен неявного binding. Больше информации тут:
 
 - [Custom component events](components.html#Custom-Events)
 - [Custom input components](components.html#Form-Input-Components-using-Custom-Events) (using component events)
@@ -311,13 +307,13 @@ Props are now always one-way down. To produce side effects in the parent scope, 
 </div>
 {% endraw %}
 
-### Prop Mutation <sup>deprecated</sup>
+### Prop мутации <sup>устаревшее</sup>
 
-Mutating a prop locally is now considered an anti-pattern, e.g. declaring a prop and then setting `this.myProp = 'someOtherValue'` in the component. Due to the new rendering mechanism, whenever the parent component re-renders, the child component's local changes will be overwritten.
+Мутация локального prop теперь считается анти-паттерном, например объявление prop и установка значения `this.myProp = 'someOtherValue'` в компоненте. Это происходит из-за нового механизма рендеринга, каждый раз, когда родительский компонент повторно делает re-render, локальные изменения дочернего компонента будут перезаписаны.
 
-Most use cases of mutating a prop can be replaced by one of these options:
+Большинство вариантов использования видоизменения опоры может быть заменено одной из этих опций:
 
-- a data property, with the prop used to set its default value
+- при объявлении prop переменной устанавливать значение по умолчанию (default)
 - a computed property
 
 {% raw %}
@@ -327,9 +323,9 @@ Most use cases of mutating a prop can be replaced by one of these options:
 </div>
 {% endraw %}
 
-### Props on a Root Instance <sup>deprecated</sup>
+### Props on a Root экземплярах <sup>устаревшее</sup>
 
-On root Vue instances (i.e. instances created with `new Vue({ ... })`), you must use `propsData` instead instead of `props`.
+В root Vue экземпляре (т.е. в экземлярох созданных так: `new Vue({ ... })` ), вы можете использовать `propsData` взамен `props`.
 
 {% raw %}
 <div class="upgrade-path">
@@ -338,15 +334,15 @@ On root Vue instances (i.e. instances created with `new Vue({ ... })`), you must
 </div>
 {% endraw %}
 
-## Built-In Directives
+## Встроенные директивы
 
-### Truthiness/Falsiness with `v-bind`
+### Истинность/Лживость с `v-bind`
 
-When used with `v-bind`, the only falsy values are now: `null`, `undefined`, and `false`. This means `0` and empty strings will render as truthy. So for example, `v-bind:draggable="''"` will render as `draggable="true"`.
+Когда используем `v-bind`, ложными значениями явлются только: `null`, `undefined`, and `false`. А значение `0` и пустая строка будет являтся истинными. R ghbvthe, `v-bind:draggable="''"` будет отрендерено как `draggable="true"`.
 
-For enumerated attributes, in addition to the falsy values above, the string `"false"` will also render as `attr="false"`.
+Для перечесляемых атрибутов, в дополнение к лживым значениям выше, строка `"false"` будет отрендерено как `attr="false"`.
 
-<p class="tip">Note that for other directives (e.g. `v-if` and `v-show`), JavaScript's normal truthiness still applies.</p>
+<p class="tip">Обратите внимание на то, что для других директив (например, 'v-if' и 'v-show'), все еще применяется нормальное правдоподобие JavaScript.</p>
 
 {% raw %}
 <div class="upgrade-path">
